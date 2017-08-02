@@ -8,7 +8,7 @@
 package routers
 
 import (
-	"weChat1.0V/controllers"
+	"beego-wechat/controllers"
 
 	"github.com/astaxie/beego"
 )
@@ -23,6 +23,11 @@ func init() {
 		beego.NSNamespace("/user",
 			beego.NSInclude(
 				&controllers.UserController{},
+			),
+		),
+		beego.NSNamespace("/wx_connect",
+			beego.NSInclude(
+				&controllers.BaseControllers{},
 			),
 		),
 	)

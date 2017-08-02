@@ -1,7 +1,7 @@
 package controllers
 
 import (
-	"weChat1.0V/models"
+	"beego-wechat/models"
 	"encoding/json"
 
 	"github.com/astaxie/beego"
