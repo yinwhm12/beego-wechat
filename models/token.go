@@ -9,7 +9,7 @@ import (
 
 type AccessToken struct {
 	Id int `orm:"pk;column(id);auto"`
-	AccessToken string	`orm:"column(id)"`
+	AccessToken string	`orm:"column(access_token)"`
 }
 
 func (at *AccessToken)TableName() string {

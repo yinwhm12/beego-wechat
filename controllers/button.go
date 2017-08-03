@@ -1,6 +1,5 @@
 package controllers
 
-import "io/ioutil"
 
 type WXMenuEvent struct {
 	ToUserName	string `xml:"ToUserName"`
@@ -20,7 +19,7 @@ type ButtonControllers struct {
 
 // @router [post]
 func (c *ButtonControllers)Post()  {
-	if bytes, err := ioutil.ReadAll(c.Ctx.Request.Body); err == nil{
-
-	}
+	//if bytes, err := ioutil.ReadAll(c.Ctx.Request.Body); err == nil{
+	//
+	//}
 }
