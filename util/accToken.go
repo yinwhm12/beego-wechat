@@ -21,6 +21,7 @@ type AccessTokenErrorResponse struct {
 }
 
 func GetAccessToken(appID, appSecret, accessTokenURL string)(string, error)  {
+	fmt.Println("asking token from remote -----")
 	requestLine := strings.Join([]string{accessTokenURL,"?grant_type=client_credential&appid=",appID,"&secret=",appSecret},"")
 	resp, err := http.Get(requestLine)
 	if err != nil || resp.StatusCode != http.StatusOK{
@@ -34,6 +35,7 @@ func GetAccessToken(appID, appSecret, accessTokenURL string)(string, error)  {
 		return "", err
 	}
 	if bytes.Contains(body, []byte("access_token")){
+		fmt.Println("contains token----")
 		atp := AccessTokenResponse{}
 		err = json.Unmarshal(body,&atp)
 		if err != nil{
@@ -42,6 +44,7 @@ func GetAccessToken(appID, appSecret, accessTokenURL string)(string, error)  {
 		}
 		return atp.AccessToken, nil
 	}else{
+		fmt.Println("no token contains-------")
 		ater := AccessTokenErrorResponse{}
 		err = json.Unmarshal(body, &ater)
 		if err != nil{

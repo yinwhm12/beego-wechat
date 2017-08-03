@@ -21,6 +21,7 @@ func init()  {
 }
 
 func GetAndUpdateAccessToken()error  {
+	fmt.Println("in getAndUpdate----")
 	o := orm.NewOrm()
 	token := Token{Id:1}
 	o.ReadOrCreate(&token, "id")

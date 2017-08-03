@@ -28,7 +28,7 @@ func (c *BaseControllers)Get()  {
 		echostr := c.GetString("echostr")
 		c.Ctx.WriteString(echostr)
 		if once == 1{
-			fmt.Println("第一次获取token")
+			fmt.Println("first time ---token")
 			tool.ShopTimeTask()
 			once ++
 		}
