@@ -17,7 +17,7 @@ func PushMenuCreate(accessToken string, menuJsonBytes []byte)error  {
 		fmt.Println("向微信发送建立建立菜单失败",err)
 		return err
 	}
-	postReq.Header.Set("Constent-Type","application/json;encoding=utf-8")
+	postReq.Header.Set("Content-Type","application/json;encoding=utf-8")
 	client := &http.Client{}
 	resp, err := client.Do(postReq)
 	if err != nil{

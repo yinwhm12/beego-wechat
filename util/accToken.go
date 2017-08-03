@@ -33,7 +33,7 @@ func GetAccessToken(appID, appSecret, accessTokenURL string)(string, error)  {
 		fmt.Println("获取accessToken body 失败", err)
 		return "", err
 	}
-	if bytes.Contains(body, []byte("access_tokne")){
+	if bytes.Contains(body, []byte("access_token")){
 		atp := AccessTokenResponse{}
 		err = json.Unmarshal(body,&atp)
 		if err != nil{

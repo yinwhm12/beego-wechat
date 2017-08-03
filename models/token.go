@@ -7,22 +7,22 @@ import (
 	"github.com/astaxie/beego"
 )
 
-type AccessToken struct {
+type Token struct {
 	Id int `orm:"pk;column(id);auto"`
 	AccessToken string	`orm:"column(access_token)"`
 }
 
-func (at *AccessToken)TableName() string {
+func (at *Token)TableName() string {
 	return "token"
 }
 
 func init()  {
-	orm.RegisterModel(new(AccessToken))
+	orm.RegisterModel(new(Token))
 }
 
 func GetAndUpdateAccessToken()error  {
 	o := orm.NewOrm()
-	token := AccessToken{Id:1}
+	token := Token{Id:1}
 	o.ReadOrCreate(&token, "id")
 	//err := o.Read(&token)
 	//if err != nil{
@@ -39,7 +39,7 @@ func GetAndUpdateAccessToken()error  {
 	return nil
 }
 
-func GetAccessToken(id int)(token *AccessToken, err error)  {
+func GetAccessToken(id int)(token *Token, err error)  {
 	o := orm.NewOrm()
 	token.Id = id
 	o.ReadOrCreate(&token,"id")

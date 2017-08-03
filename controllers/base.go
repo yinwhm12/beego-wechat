@@ -7,6 +7,7 @@ import (
 	"io"
 	"strings"
 	"fmt"
+	"beego-wechat/controllers/tool"
 )
 
 type BaseControllers struct {
@@ -14,6 +15,7 @@ type BaseControllers struct {
 }
 
 const Token  = "yinwhm12"
+var once int = 1
 
 // @router / [get]
 func (c *BaseControllers)Get()  {
@@ -25,6 +27,10 @@ func (c *BaseControllers)Get()  {
 	}else{
 		echostr := c.GetString("echostr")
 		c.Ctx.WriteString(echostr)
+		if once == 1{
+			tool.ShopTimeTask()
+			once ++
+		}
 	}
 	
 }

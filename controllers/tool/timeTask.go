@@ -5,8 +5,12 @@ import (
 	"beego-wechat/models"
 )
 
+//func init()  {
+//	shopTimeTask()
+//}
+
 //在第一个用户请求数据是就 触发一次
-func shopTimeTask()  {
+func ShopTimeTask()  {
 	timeStr := "0 */60 * * * *"
 	getTokenTask := toolbox.NewTask("getToken",timeStr, func() error {
 		err := models.GetAndUpdateAccessToken()
