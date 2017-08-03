@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 
 	"github.com/astaxie/beego"
+	"fmt"
 )
 
 // Operations about Users
@@ -31,9 +32,10 @@ func (u *UserController) Post() {
 // @Success 200 {object} models.User
 // @router / [get]
 func (u *UserController) GetAll() {
-	users := models.GetAllUsers()
-	u.Data["json"] = users
-	u.ServeJSON()
+	fmt.Println("hello")
+	//users := models.GetAllUsers()
+	//u.Data["json"] = users
+	//u.ServeJSON()
 }
 
 // @Title Get

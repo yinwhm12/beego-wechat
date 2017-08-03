@@ -10,7 +10,7 @@ func init() {
 	beego.GlobalControllerRouter["beego-wechat/controllers:BaseControllers"] = append(beego.GlobalControllerRouter["beego-wechat/controllers:BaseControllers"],
 		beego.ControllerComments{
 			Method: "Get",
-			Router: `[get]`,
+			Router: `/`,
 			AllowHTTPMethods: []string{"get"},
 			MethodParams: param.Make(),
 			Params: nil})

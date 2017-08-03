@@ -15,7 +15,7 @@ type BaseControllers struct {
 
 const Token  = "yinwhm12"
 
-// @router [get]
+// @router / [get]
 func (c *BaseControllers)Get()  {
 	timestamp, nonce, signatureIn := c.GetString("timestamp"), c.GetString("nonce"), c.GetString("signature")
 	signatureGen := makeSignature(timestamp,nonce)
