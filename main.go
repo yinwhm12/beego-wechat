@@ -24,6 +24,7 @@ func init()  {
 	orm.RegisterDataBase("default", "mysql", link)
 
 	orm.Debug = beego.BConfig.RunMode == "dev"
+	//fmt.Println("appid=",beego.AppConfig.String("appid"),"appsecret=",beego.AppConfig.String("appsecret"))
 	//go func() {
 	//	time.Sleep(10 * time.Second)
 	//	tool.ShopTimeTask()

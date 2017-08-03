@@ -3,6 +3,7 @@ package tool
 import (
 	"github.com/astaxie/beego/toolbox"
 	"beego-wechat/models"
+	"fmt"
 )
 
 //func init()  {
@@ -16,6 +17,7 @@ func ShopTimeTask()  {
 		err := models.GetAndUpdateAccessToken()
 		if err != nil{
 			//	请求access_token失败 业务处理
+			fmt.Println("获取access_token失败!")
 		}
 		return nil
 	})

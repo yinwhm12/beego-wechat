@@ -24,17 +24,20 @@ func GetAndUpdateAccessToken()error  {
 	o := orm.NewOrm()
 	token := Token{Id:1}
 	o.ReadOrCreate(&token, "id")
+	fmt.Println("readOrcreate")
 	//err := o.Read(&token)
 	//if err != nil{
 	//	fmt.Println("从数据查询失败!")
 	//	return err
 	//}
+	//fmt.Println("appid=",beego.AppConfig.String("appid"),"appsecret=",beego.AppConfig.String("appsecret"))
 	accessToken, err := util.GetAccessToken(beego.AppConfig.String("appid"),beego.AppConfig.String("appsecret"),"https://api.weixin.qq.com/cgi-bin/token")
 	if err != nil{
 		fmt.Println("发送请求token失败!")
 		return err
 	}
 	token.AccessToken = accessToken
+	fmt.Println("accessToken",accessToken)
 	o.Update(&token,"access_token")
 	return nil
 }
