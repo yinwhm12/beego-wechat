@@ -13,7 +13,9 @@ import (
 //在第一个用户请求数据是就 触发一次
 func ShopTimeTask()  {
 	fmt.Println("shopTime in----")
-	timeStr := "0 */60 * * * *"
+	//timeStr := "0 */60 * * * *"
+	timeStr := "0/30 * * * * *"
+
 	getTokenTask := toolbox.NewTask("getToken",timeStr, func() error {
 		err := models.GetAndUpdateAccessToken()
 		if err != nil{
