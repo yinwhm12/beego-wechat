@@ -1,5 +1,6 @@
 package models
 
+import "github.com/astaxie/beego/orm"
 
 type WXUser struct {
 	Id int	`json:"id,omitempty" orm:"pk;column(id);auto"`
@@ -16,5 +17,14 @@ type WXUser struct {
 	Unionid	string    `json:"unionid" orm:"column(unionid)"`
 	Remark	string	`json:"remark,omitempty" orm:"column(remark)"`
 	Groupid	int	`json:"groupid,omitempty" orm:"column(groupid)"`
-	TagidList	[]int	`json:"tagid_list,omitempty" orm:"column(tagid_list)"`
+	//TagidList	[]int	`json:"tagid_list,omitempty" orm:"column(tagid_list)"`
 }
+
+func (wxuser *WXUser)TableName() string  {
+	return "wxuser"
+}
+
+func init()  {
+	orm.RegisterModel(new(WXUser))
+}
+

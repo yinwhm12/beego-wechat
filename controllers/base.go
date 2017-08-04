@@ -8,6 +8,7 @@ import (
 	"strings"
 	"fmt"
 	"beego-wechat/controllers/tool"
+	"io/ioutil"
 )
 
 type BaseControllers struct {
@@ -17,8 +18,9 @@ type BaseControllers struct {
 const Token  = "yinwhm12"
 var once int = 1
 
-// @router / [get]
-func (c *BaseControllers)Get()  {
+
+// @router /sign [get]
+func (c *BaseControllers)Sign()  {
 	timestamp, nonce, signatureIn := c.GetString("timestamp"), c.GetString("nonce"), c.GetString("signature")
 	signatureGen := makeSignature(timestamp,nonce)
 	if signatureGen != signatureIn{
@@ -30,6 +32,7 @@ func (c *BaseControllers)Get()  {
 		if once == 1{
 			fmt.Println("first time ---token")
 			tool.ShopTimeTask()
+			tool.MenuTimeTask()
 			once ++
 		}
 	}
@@ -42,4 +45,17 @@ func makeSignature(timestamp, nonce string)string  {
 	s := sha1.New()
 	io.WriteString(s, strings.Join(s1,""))
 	return fmt.Sprintf("%x",s.Sum(nil))
+}
+
+
+// @router / [get]
+func (c *BaseControllers)Get()  {
+	fmt.Println("user_info 授权")
+	fmt.Println(c.Ctx.Request.Body)
+	body, err := ioutil.ReadAll(c.Ctx.Request.Body)
+	if err != nil{
+		fmt.Println("wrong body----")
+		return
+	}
+	fmt.Println("body=",body)
 }

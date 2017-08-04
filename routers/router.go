@@ -30,6 +30,11 @@ func init() {
 				&controllers.BaseControllers{},
 			),
 		),
+		beego.NSNamespace("/wx_user",
+			beego.NSInclude(
+				&controllers.WXUserBaseControllers{},
+			),
+		),
 	)
 	beego.AddNamespace(ns)
 }

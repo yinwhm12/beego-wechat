@@ -10,7 +10,7 @@ import (
 
 func PushMenuCreate(accessToken string, menuJsonBytes []byte)error  {
 	postReq, err := http.NewRequest("POST",
-		strings.Join([]string{" https://api.weixin.qq.com/cgi-bin/menu/create?access_token=",accessToken},""),
+		strings.Join([]string{"https://api.weixin.qq.com/cgi-bin/menu/create?access_token=",accessToken},""),
 		bytes.NewReader(menuJsonBytes))
 
 	if err != nil{
@@ -30,7 +30,7 @@ func PushMenuCreate(accessToken string, menuJsonBytes []byte)error  {
 	return nil
 }
 
-func createMenu()  {
+func CreateMenu() error {
 	menuStr := `{
             "button": [
             {
@@ -61,10 +61,11 @@ func createMenu()  {
             ]
         }`
 	token, err := models.GetAccessToken(1)
+	fmt.Println("token===",token)
 	if err != nil{
 		fmt.Println("从数据库获取token失败",err)
-		return
+		return err
 	}
-	PushMenuCreate(token.AccessToken, []byte(menuStr))
+	return PushMenuCreate(token.AccessToken, []byte(menuStr))
 
 }

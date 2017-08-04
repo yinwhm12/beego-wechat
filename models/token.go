@@ -43,7 +43,7 @@ func GetAndUpdateAccessToken()error  {
 	return nil
 }
 
-func GetAccessToken(id int)(token *Token, err error)  {
+func GetAccessToken(id int)(token Token, err error)  {
 	o := orm.NewOrm()
 	token.Id = id
 	o.ReadOrCreate(&token,"id")
