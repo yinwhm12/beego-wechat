@@ -28,3 +28,23 @@ func init()  {
 	orm.RegisterModel(new(WXUser))
 }
 
+func AddWXUser(wxuser WXUser)(error)  {
+	o := orm.NewOrm()
+	_, err := o.Insert(&wxuser)
+	return err
+}
+
+func GetWXUserByOpenid(openid string) (wxuser WXUser, err error) {
+	o := orm.NewOrm()
+	err = o.QueryTable(new(ARToken)).Filter("Openid",openid).One(&wxuser)
+	return
+}
+
+func GetWXUserById(id int)(wxuser WXUser,err error)  {
+	o := orm.NewOrm()
+	wxuser = WXUser{Id:id}
+	if err = o.Read(&wxuser); err == nil{
+		return wxuser, nil
+	}
+	return nil, err
+}

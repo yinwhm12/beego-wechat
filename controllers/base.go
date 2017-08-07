@@ -8,7 +8,7 @@ import (
 	"strings"
 	"fmt"
 	"beego-wechat/controllers/tool"
-	"io/ioutil"
+	"net/url"
 )
 
 type BaseControllers struct {
@@ -51,11 +51,20 @@ func makeSignature(timestamp, nonce string)string  {
 // @router / [get]
 func (c *BaseControllers)Get()  {
 	fmt.Println("user_info 授权")
-	fmt.Println(c.Ctx.Request.Body)
-	body, err := ioutil.ReadAll(c.Ctx.Request.Body)
-	if err != nil{
-		fmt.Println("wrong body----")
-		return
+	//fmt.Println(c.Ctx.Request.Body)
+	//body, err := ioutil.ReadAll(c.Ctx.Request.Body)
+	//if err != nil{
+	//	fmt.Println("wrong body----")
+	//	return
+	//}
+	//fmt.Println("body=",body)
+	if code := c.GetString("code"); code == ""{
+		encodUrl := url.QueryEscape(beego.AppConfig.String("baseURL")+"/v1/wx_connect")
+		urlStr := "https://open.weixin.qq.com/connect/oatuorize?appid="+
+			beego.AppConfig.String("appid")+"&redirect_uri="+encodUrl+
+			"&response_type=code&scope=snsapi_base&state=123#wechat_redirect"
+		c.Redirect(urlStr,302)
+	}else{
+
 	}
-	fmt.Println("body=",body)
 }
