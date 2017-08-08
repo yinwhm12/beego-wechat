@@ -31,6 +31,14 @@ func init() {
 			MethodParams: param.Make(),
 			Params: nil})
 
+	beego.GlobalControllerRouter["beego-wechat/controllers:BaseControllers"] = append(beego.GlobalControllerRouter["beego-wechat/controllers:BaseControllers"],
+		beego.ControllerComments{
+			Method: "Post",
+			Router: `/sign`,
+			AllowHTTPMethods: []string{"post"},
+			MethodParams: param.Make(),
+			Params: nil})
+
 	beego.GlobalControllerRouter["beego-wechat/controllers:ButtonControllers"] = append(beego.GlobalControllerRouter["beego-wechat/controllers:ButtonControllers"],
 		beego.ControllerComments{
 			Method: "Post",

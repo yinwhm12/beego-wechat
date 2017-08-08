@@ -23,7 +23,7 @@ func init()  {
 //	o := orm.NewOrm()
 //	artoken := ARToken{Openid:openid}
 //	o.ReadOrCreate(&artoken,"openid")
-//
+//	o.Update(artoken,"")
 //}
 
 func GetARTokenByOpenid(openid string)(art ARToken, err error)  {

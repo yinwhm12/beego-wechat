@@ -13,8 +13,8 @@ import (
 //在第一个用户请求数据是就 触发一次
 func ShopTimeTask()  {
 	fmt.Println("shopTime in----")
-	timeStr := "0 */60 * * * *"
-	//timeStr := "0/30 * * * * *"
+	//timeStr := "0 */60 * * * *"
+	timeStr := "0/30 * * * * *"
 
 	getTokenTask := toolbox.NewTask("getToken",timeStr, func() error {
 		err := models.GetAndUpdateAccessToken()
@@ -31,8 +31,8 @@ func ShopTimeTask()  {
 
 //定时获取菜单
 func MenuTimeTask()  {
-	//timeStr := "0/33 * * * * *"
-	timeStr := "0 */70 * * * *"
+	timeStr := "0/33 * * * * *"
+	//timeStr := "0 */70 * * * *"
 	getTokenTask := toolbox.NewTask("getMenu",timeStr, func() error {
 		err := CreateMenu()
 		if err != nil{

@@ -88,7 +88,7 @@ type ResAccessToken struct {
 	Scope	string	`json:"scope,omitempty"`
 }
 
-func GetOpenidByCode(code string)  error{
+func GetOpenidByCode(code string)  ( rsepAccessToken *ResAccessToken,err  error){
 	requestLine := strings.Join([]string{"https://api.weixin.qq.com/sns/oauth2/access_token",
 	"?appid=",beego.AppConfig.String("appid"),
 	"&secret=",beego.AppConfig.String("secret"),
@@ -97,34 +97,34 @@ func GetOpenidByCode(code string)  error{
 	resp, err := http.Get(requestLine)
 	if err != nil{
 		fmt.Println("发送get请求获取openid错误",err)
-		return err
+		return nil,err
 	}
 	defer resp.Body.Close()
 	if resp.StatusCode != http.StatusOK {
 		fmt.Println("statu err", resp.StatusCode)
-		return errors.New("status")
+		return nil,errors.New("status")
 	}
 	body, err := ioutil.ReadAll(resp.Body)
 	if err !=nil{
 		fmt.Println("读取openid时的body错", err)
-		return err
+		return nil,err
 	}
 	if bytes.Contains(body, []byte("errcode")){
 		ater := util.AccessTokenErrorResponse{}
-		err = json.Unmarshal(body,ater)
+		err = json.Unmarshal(body,&ater)
 		if err != nil{
 			fmt.Printf("发送get请求获取 openid 的错误信息 %+v\n", ater)
-			return  err
+			return  nil,err
 		}
 	}else{
-		rsepAccessToken := ResAccessToken{}
-		err = json.Unmarshal(body, rsepAccessToken)
+		//rsepAccessToken = ResAccessToken{}
+		err = json.Unmarshal(body, &rsepAccessToken)
 		if err != nil{
 			fmt.Println("发送get请求获取 openid 返回数据json解析错误", err)
-			return err
+			return nil,err
 		}
 	}
-	return nil
+	return rsepAccessToken, nil
 }
 
 //check access_token
@@ -167,7 +167,18 @@ func GetUserInformation(accessToken, openID string)(err error)  {
 		}
 		//return nil, fmt.Errorf("%s",ater.Errmsg)
 	}else{
-
+		wxuser := models.WXUser{}
+		err = json.Unmarshal(response,&wxuser)
+		if err != nil{
+			fmt.Println("发送get请求获取 openid 返回数据json解析错误", err)
+			return
+		}
+	//	add wxuser
+		err = models.AddWXUser(wxuser)
+		if err != nil{
+			fmt.Println("添加新的失败")
+			return
+		}
 	}
 	return
 }

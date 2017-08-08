@@ -8,7 +8,9 @@ import (
 	"strings"
 	"fmt"
 	"beego-wechat/controllers/tool"
-	"net/url"
+	"io/ioutil"
+	"encoding/xml"
+	"beego-wechat/util"
 )
 
 type BaseControllers struct {
@@ -58,13 +60,57 @@ func (c *BaseControllers)Get()  {
 	//	return
 	//}
 	//fmt.Println("body=",body)
-	if code := c.GetString("code"); code == ""{
-		encodUrl := url.QueryEscape(beego.AppConfig.String("baseURL")+"/v1/wx_connect")
-		urlStr := "https://open.weixin.qq.com/connect/oatuorize?appid="+
-			beego.AppConfig.String("appid")+"&redirect_uri="+encodUrl+
-			"&response_type=code&scope=snsapi_base&state=123#wechat_redirect"
-		c.Redirect(urlStr,302)
-	}else{
+	//if code := c.GetString("code"); code == ""{
+	//	encodUrl := url.QueryEscape(beego.AppConfig.String("baseURL")+"/v1/wx_connect")
+	//	urlStr := "https://open.weixin.qq.com/connect/oatuorize?appid="+
+	//		beego.AppConfig.String("appid")+"&redirect_uri="+encodUrl+
+	//		"&response_type=code&scope=snsapi_base&state=123#wechat_redirect"
+	//	c.Redirect(urlStr,302)
+	//}else{
+	//	respAccessToken, err := tool.GetOpenidByCode(code)
+	//	if err != nil{
+	//		fmt.Println("something wrong!")
+	//		return
+	//	}else{
+	//		art, err := models.GetARTokenByOpenid(respAccessToken.Openid)
+	//		if err != nil{
+	//			err = models.AddARToken(art)
+	//			if err != nil{
+	//				fmt.Println("存入有误")
+	//				return
+	//			}
+	//			err = tool.GetUserInformation(art.AccessToken,art.Openid)
+	//			if err != nil{
+	//				fmt.Println("add new fail")
+	//				return
+	//			}
+	//			//return
+	//		}else{
+	//			err = models.UpdateARTokenByOpenid(&art)
+	//			if err != nil{
+	//				fmt.Println("更新有误!")
+	//				return
+	//			}
+	//		}
+	//	}
+	//}
+}
 
+
+// @router /sign [post]
+func (c *BaseControllers)Post()  {
+	body, err := ioutil.ReadAll(c.Ctx.Request.Body)
+	if err != nil{
+		fmt.Println("wrong with body")
+		return
+	}
+	fmt.Println("body=",body)
+	normalEvent := new(util.NormalEvent)
+	if err = xml.Unmarshal(body,&normalEvent); err == nil{
+		fmt.Println("normalEvent",normalEvent)
+		tool.DealMenuEvent(normalEvent)
+	}else{
+		fmt.Println("解析失败")
 	}
 }
+
